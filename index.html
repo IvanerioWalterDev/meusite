@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serra Da Chela_Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #f8f6f4;
+        }
+
+
+        .header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #fff; /* White background for the header */
+            border-bottom: 1px solid #eee; /* Subtle bottom border */
+            position: fixed; /* Make header sticky */
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure header is on top of other content */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #333; /* Dark color for logo text */
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .logo svg {
+            margin-right: 10px;
+            color: #a08169; /* Example color for the logo icon, adjust if needed */
+        }
+
+        .logo-text {
+            font-size: 1.5em; /* Larger font for "PAULI" */
+            margin-right: 5px;
+        }
+
+        .logo-subtext {
+            font-size: 0.8em; /* Smaller font for "BOUTIQUE HOTEL" */
+            color: #666;
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 600px; /* Minimum height for the hero section */
+            margin-top: 70px; /* Space for the fixed header */
+            background-image: url('palés/ap.webp'); /* Placeholder image */
+            background-size: cover; /* Make background image cover the entire section */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center; /* Vertically center content */
+            justify-content: flex-start; /* Align content to the left */
+            color: white; /* Text color for content over background */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for readability */
+            padding: 0 50px; /* Padding for content inside hero section */
+            box-sizing: border-box;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay for better text readability */
+            z-index: 1; /* Place overlay below content but above background image */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2; /* Ensure content is above the overlay */
+            padding-bottom: 50px; /* Space for WhatsApp button */
+        }
+
+        .hero-content h1 {
+            font-size: 4em; /* Large heading */
+            margin-bottom: 20px;
+            font-weight: normal; /* "Nossos Quartos" seems to be normal weight */
+        }
+
+        .whatsapp-float-hero {
+            position: absolute;
+            bottom: 20px; /* Distance from bottom */
+            left: 0; /* Align with content on the left */
+            background-color: #25d366; /* WhatsApp green */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 3; /* Ensure it's above other elements */
+            text-decoration: none; /* Remove underline from link */
+        }
+
+        /* --- Room Listings Grid Styles --- */
+        .room-listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px; /* Space between grid items */
+            padding: 60px 50px; /* Padding around the entire grid section */
+            justify-content: center; /* Center the grid items if there are not enough to fill the row */
+        }
+
+        .room-card-v2 {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensures image corners are rounded with the card */
+            display: flex;
+            flex-direction: column; /* Stack image and details vertically */
+            text-align: left;
+            transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+        }
+
+        .room-card-v2:hover {
+            transform: translateY(-5px); /* Slight lift on hover */
+        }
+
+        .room-image-v2 {
+            width: 100%;
+            height: 250px; /* Fixed height for room images */
+            overflow: hidden;
+        }
+
+        .room-image-v2 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers the area without distortion */
+            display: block; /* Removes extra space below image */
+        }
+
+        .room-details-v2 {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allows details to fill remaining height in card */
+        }
+/* TITULO DOS QUARTOS: */
+        .room-details-v2 h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color:#a08169;
+            font-size: 1.3em;
+            font-weight: lighter;
+        }
+
+        .room-details-v2 p {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1; /* Allows description to take available vertical space */
+        }
+
+        .room-actions-v2 {
+            display: flex;
+            flex-direction: column; /* Stack quantity/button and price vertically */
+            gap: 15px; /* Space between quantity/button and price */
+            margin-top: auto; /* Pushes content to the bottom of the card details */
+        }
+
+        /* Styles for Quantity Input */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px; /* Space below quantity selector */
+        }
+
+        .quantity-selector label {
+            font-size: 0.9em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .quantity-selector input[type="number"] {
+            width: 70px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+            
+        }
+
+        .quantity-selector input[type="number"]::-webkit-outer-spin-button,
+        .quantity-selector input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Remove arrows on Chrome, Safari, Edge */
+            margin: 0;
+        }
+
+        .select-room-btn {
+            background-color: #a08169; /* Button color */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .select-room-btn:hover {
+            background-color: #8c6e5a; /* Darker shade on hover */
+        }
+
+
+        .price-info-v2 {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+/* APARTIR DE: */
+        .price-label {
+            font-size: 0.9em;
+            color: #707070;
+            margin-bottom: 3px;
+        }
+/* PREÇO: */
+        .price-amount {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #8c6e5a;
+            margin-bottom: 5px;
+        }
+
+        .payment-terms {
+            font-size: 0.85em;
+            color: #777;
+        }
+
+        /* --- Reservation Form Styles --- */
+        .reservation-form-section {
+            background-color: #fff;
+            padding: 40px 50px;
+            margin: 60px 50px; /* Adjust margin as needed */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none; /* Hidden by default, shown by JS */
+            scroll-margin-top: 100px; /* Space from top when scrolling to it */
+        }
+
+        .reservation-form-section h2 {
+            color: #a08169;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .reservation-form-section form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .reservation-form-section label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .reservation-form-section input[type="text"],
+        .reservation-form-section input[type="email"],
+        .reservation-form-section input[type="date"],
+        .reservation-form-section input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .reservation-form-section button[type="submit"] {
+            background-color: #25d366; /* WhatsApp green for submit */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .reservation-form-section button[type="submit"]:hover {
+            background-color: #1ea754; /* Darker green on hover */
+        }
+
+
+        /* Responsividade para tabletes e pc´s pequenos */
+        @media (max-width: 1024px) {
+            .header {
+                padding: 10px 30px;
+            }
+            .hero-section {
+                min-height: 500px;
+                padding: 0 30px;
+            }
+            .hero-content h1 {
+                font-size: 3.5em;
+            }
+            .room-listings-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Allow slightly smaller cards */
+                padding: 40px 30px;
+            }
+            .room-image-v2 {
+                height: 220px;
+            }
+            .room-details-v2 h3 {
+                font-size: 1.3em;
+            }
+            .price-amount {
+                font-size: 1.8em;
+            }
+            .reservation-form-section {
+                margin: 40px 30px;
+                padding: 30px;
+            }
+        }
+
+        /* Large Phones / Small Tablets */
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 20px;
+                justify-content: center;
+            }
+            .logo-text {
+                font-size: 1.3em;
+            }
+            .logo-subtext {
+                font-size: 0.7em;
+            }
+
+            .hero-section {
+                min-height: 400px;
+                padding: 0 20px;
+                justify-content: center; /* Center content horizontally on smaller screens */
+                text-align: center;
+            }
+            .hero-content h1 {
+                font-size: 3em;
+            }
+            .whatsapp-float-hero {
+                left: 50%; /* Center the WhatsApp button */
+                transform: translateX(-50%); /* Adjust for perfect centering */
+            }
+
+            .room-listings-grid {
+                grid-template-columns: 1fr; /* Single column layout on smaller screens */
+                padding: 30px 20px;
+                gap: 25px;
+            }
+            .room-card-v2 {
+                max-width: 500px; /* Limit card width on very narrow screens */
+                margin: 0 auto; /* Center single column cards */
+            }
+            .room-image-v2 {
+                height: 200px;
+            }
+            .room-details-v2 {
+                padding: 15px;
+            }
+            .room-details-v2 h3 {
+                font-size: 1.2em;
+            }
+            .room-details-v2 p {
+                font-size: 0.85em;
+            }
+            .price-amount {
+                font-size: 1.6em;
+            }
+
+            .room-actions-v2 {
+                align-items: center; /* Center content in this flex container */
+            }
+            .price-info-v2 {
+                align-items: center; /* Center price details */
+            }
+            .quantity-selector {
+                flex-direction: column; /* Stack label and input/button */
+                align-items: center;
+            }
+            .quantity-selector input[type="number"] {
+                width: 100px; /* Adjust width for better touch on mobile */
+            }
+            .select-room-btn {
+                width: 100%; /* Make button full width */
+            }
+            .reservation-form-section {
+                margin: 30px 20px;
+                padding: 25px;
+            }
+        }
+
+        /* Smaller Phones */
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px 15px;
+            }
+            .logo svg {
+                width: 30px;
+                height: 30px;
+            }
+            .logo-text {
+                font-size: 1.1em;
+            }
+            .logo-subtext {
+                font-size: 0.6em;
+            }
+            .hero-section {
+                min-height: 300px;
+                padding: 0 15px;
+            }
+            .hero-content h1 {
+                font-size: 2.2em;
+            }
+            .whatsapp-float-hero {
+                width: 40px;
+                height: 40px;
+            }
+            .whatsapp-float-hero svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .room-listings-grid {
+                padding: 20px 15px;
+                gap: 20px;
+            }
+            .room-image-v2 {
+                height: 180px;
+            }
+            .room-details-v2 h3 {
+                font-size: 1.1em;
+            }
+            .room-details-v2 p {
+                font-size: 0.8em;
+            }
+            .price-amount {
+                font-size: 1.4em;
+            }
+            .price-label, .payment-terms {
+                font-size: 0.8em;
+            }
+            .reservation-form-section {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+            .reservation-form-section h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+     <div class="logo">
+         <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9v-6h2v6zm4 0h-2v-6h2v6zm-3-8h-2V7h2v2z"/>
+            </svg>
+            <span class="logo-text">SERRA</span>
+            <span class="logo-subtext">DA CHELA</span>
+        </div>
+        </header>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Nossos Quartos</h1>
+            <a href="https://wa.me/+244929136688" target="_blank" class="whatsapp-float-hero" aria-label="Fale conosco via WhatsApp">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.52 3.42 1.48 4.88L2.05 22l5.02-1.32c1.38.7 2.92 1.07 4.97 1.07 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm3.64 13.66c-.1.17-.22.2-.4.27-.18.07-.36.03-.56-.03-.2-.07-.47-.18-.75-.38-.28-.2-.59-.5-.87-.85-.29-.35-.58-.79-.81-1.29-.23-.5-.34-.99-.34-1.5 0-.5.14-.92.31-1.21.17-.29.4-.4.65-.49.25-.09.5-.1.7-.1.2 0 .42.06.6.2.18.14.4.39.6.76.2.36.33.64.44.8.1.17.2.2.3.2.1 0 .23-.04.35-.1.12-.07.3-.17.5-.27.2-.1.4-.1.6-.1.2 0 .44.06.63.18.19.12.35.29.47.46.12.17.2.3.28.43.08.13.15.28.18.42.03.14.06.27.06.4-.01.37-.15.7-.27.97-.13.27-.28.49-.47.65-.19.16-.36.26-.52.32z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <section class="room-listings-grid">
+        <div class="room-card-v2">
+            <div class="room-image-v2">
+                <img src="palés/solteiro.jpg" alt="Quarto Single">
+            </div>
+            <div class="room-details-v2">
+                <h3>Quarto Single</h3>
+                <p>Com vista interna, possui capacidade para hospedar até 01 pessoa, pode ser configurado com 01 cama solteiro. Disponibilidade: Ar condicionado Split, TV 35", Frigobar, Cofre digital, Secador de cabelos, Guarda-Roupa, Banheiro privativo com amenities. Chuveiro elétrico. Toalhas e roupas de cama.</p>
+                <div class="room-actions-v2">
+                    <div class="quantity-selector">
+                        <label for="qty-single">Quantidade:</label>
+                        <input type="number" id="qty-single" value="1" min="1" max="5">
+                    </div>
+                    <button class="select-room-btn">Selecionar</button>
+
+                    <div class="price-info-v2">
+                        <span class="price-label">A partir de</span>
+                        <span class="price-amount">AKS 25,000</span>
+                        <span class="payment-terms">Pagamento pré pago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="room-card-v2">
+            <div class="room-image-v2">
+                <img src="palés/twin.jpeg" alt="Quarto TWIN">
+            </div>
+            <div class="room-details-v2">
+                <h3>Quarto TWIN</h3>
+                <p>Desfrute de uma vista deslumbrante para o mar. Capacidade para 02 pessoas, com 01 cama de casal king-size. Inclui ar condicionado, TV 42", frigobar, cofre digital, varanda privativa, e banheiro com ducha relaxante. Área de 20m².</p>
+                <div class="room-actions-v2">
+                    <div class="quantity-selector">
+                        <label for="qty-twin">Quantidade:</label>
+                        <input type="number" id="qty-twin" value="1" min="1" max="5">
+                    </div>
+                    <button class="select-room-btn">Selecionar</button>
+
+                    <div class="price-info-v2">
+                        <span class="price-label">A partir de</span>
+                        <span class="price-amount">AKS 35,000</span>
+                        <span class="payment-terms">Pagamento pré pago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="room-card-v2">
+            <div class="room-image-v2">
+                <img src="palés/casal premium.jpg" alt="Quarto Casal">
+            </div>
+            <div class="room-details-v2">
+                <h3>Quarto Casal</h3>
+                <p>Ideal para famílias, esta suíte acomoda até 04 pessoas, com 01 cama de casal e 02 camas de solteiro. Oferece dois ambientes, TV 50", micro-ondas, área de estar, e banheiro espaçoso. Área de 35m².</p>
+                <div class="room-actions-v2">
+                    <div class="quantity-selector">
+                        <label for="qty-casal">Quantidade:</label>
+                        <input type="number" id="qty-casal" value="1" min="1" max="5">
+                    </div>
+                    <button class="select-room-btn">Selecionar</button>
+
+                    <div class="price-info-v2">
+                        <span class="price-label">A partir de</span>
+                        <span class="price-amount">AKS 40,000</span>
+                        <span class="payment-terms">Pagamento pré pago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="room-card-v2">
+            <div class="room-image-v2">
+                <img src="palés/suite presidencial.jpg" alt="Suíte presidencial">
+            </div>
+            <div class="room-details-v2">
+                <h3>Suíte presidencial</h3>
+                <p>Perfeito para viajantes a negócios. Capacidade para 01 pessoa, com 01 cama de casal. Inclui mesa de trabalho, Wi-Fi de alta velocidade, cafeteira Nespresso, e amenities premium. Área de 18m².</p>
+                <div class="room-actions-v2">
+                    <div class="quantity-selector">
+                        <label for="qty-presidencial">Quantidade:</label>
+                        <input type="number" id="qty-presidencial" value="1" min="1" max="5">
+                    </div>
+                    <button class="select-room-btn">Selecionar</button>
+
+                    <div class="price-info-v2">
+                        <span class="price-label">A partir de</span>
+                        <span class="price-amount">AKS 50,000</span>
+                        <span class="payment-terms">Pagamento pré pago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="reservationFormSection" class="reservation-form-section">
+        <h2>Detalhes da Sua Reserva</h2>
+
+        <form id="reservationForm" action="https://formsubmit.co/ivawalter2004@gmail.com" method="post">
+            <div>
+                <label for="fullName">Nome Completo:</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+            <div>
+                <label for="selectedRoom">Quarto Selecionado:</label>
+                <input type="text" id="selectedRoom" name="selectedRoom" readonly required>
+            </div>
+            <div>
+                <label for="numRooms">Quantidade de Quartos:</label>
+                <input type="number" id="numRooms" name="numRooms" min="1" readonly required>
+            </div>
+            <div>
+                <label for="checkInDate">Data de Check-in:</label>
+                <input type="date" id="checkInDate" name="checkInDate" required>
+            </div>
+            <div>
+                <label for="checkOutDate">Data de Check-out:</label>
+                <input type="date" id="checkOutDate" name="checkOutDate" required>
+            </div>
+            <button type="submit">Confirmar Reserva</button>
+            <input type="hidden" name="_next" value="http://127.0.0.1:5500/index.html"> <input type="hidden" name="_captcha" value="false">
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectButtons = document.querySelectorAll('.select-room-btn');
+            const reservationFormSection = document.getElementById('reservationFormSection');
+            const reservationForm = document.getElementById('reservationForm');
+            const selectedRoomInput = document.getElementById('selectedRoom');
+            const numRoomsInput = document.getElementById('numRooms');
+            const checkInDateInput = document.getElementById('checkInDate');
+            const checkOutDateInput = document.getElementById('checkOutDate');
+
+            // Definir a data mínima para check-in como hoje
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1); // Check-out must be at least tomorrow
+
+            const todayFormatted = today.toISOString().split('T')[0];
+            const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+
+            checkInDateInput.setAttribute('min', todayFormatted);
+            checkOutDateInput.setAttribute('min', tomorrowFormatted);
+
+            // Atualizar data mínima de check-out ao mudar check-in
+            checkInDateInput.addEventListener('change', () => {
+                const checkInValue = new Date(checkInDateInput.value);
+                const nextDay = new Date(checkInValue);
+                nextDay.setDate(checkInValue.getDate() + 1);
+                checkOutDateInput.setAttribute('min', nextDay.toISOString().split('T')[0]);
+
+                // Se a data de check-out for anterior ou igual à de check-in, ajusta
+                if (new Date(checkOutDateInput.value) <= checkInValue) {
+                    checkOutDateInput.value = nextDay.toISOString().split('T')[0];
+                }
+            });
+
+            selectButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const roomCard = event.target.closest('.room-card-v2');
+                    const roomTitle = roomCard.querySelector('h3').textContent;
+                    const quantityInput = roomCard.querySelector('.quantity-selector input[type="number"]');
+                    const quantity = quantityInput ? quantityInput.value : 1; // Default to 1 if somehow not found
+
+                    // Preencher o formulário
+                    selectedRoomInput.value = roomTitle;
+                    numRoomsInput.value = quantity;
+
+                    // Exibir o formulário
+                    reservationFormSection.style.display = 'block';
+
+                    // Rolar suavemente até o formulário
+                    reservationFormSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // ATENÇÃO: Mantém apenas um listener de submit para evitar conflitos.
+            // O Formsubmit.co lida com o envio real, o JS abaixo é para feedback visual.
+            reservationForm.addEventListener('submit', (event) => {
+                // Não chame event.preventDefault() aqui se quiser que o Formsubmit.co faça o trabalho.
+                // Se você chamar, precisaria fazer um fetch() manual para o Formsubmit.co.
+
+                alert('Sua reserva foi enviada com sucesso! O hotel Serra da chela agradece /Ivanerio Developer/');
+                // Após o envio (que o Formsubmit.co cuidará), o navegador será redirecionado
+                // para a página definida em '_next'. Não há necessidade de resetar o formulário
+                // ou ocultá-lo com JS aqui, pois a página será recarregada/redirecionada.
+            });
+        });
+    </script>
+
+</body>
+</html>
